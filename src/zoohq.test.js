@@ -8,7 +8,8 @@ describe('zoohq', () => {
             lang: 'jp',
             settings: {
                 geolocation: false
-            }
+            },
+            items: []
         };
     })
     describe('store', () => {
@@ -48,22 +49,44 @@ describe('zoohq', () => {
         describe('dispatch', () => {
             it('should call the action callback with the updated store', () => {
                 let storeUser;
+                const callbackSpy = jest.fn();
                 const action = {
                     type: 'SET_USER',
                     callback: (store) => {
                         storeUser = store.user;
+                        callbackSpy();
                     }
                 };
                 zoohq.register(action);
-
-                const updatedStoreData = {
+                zoohq.dispatch('SET_USER', {
                     user: 'koningVanEend'
-                };
-                zoohq.dispatch('SET_USER', updatedStoreData);
+                });
 
                 expect(zoohq.actions.SET_USER).toBeTruthy();
                 expect(zoohq.store.user).toEqual(storeUser);
                 expect(zoohq.store.user).toEqual('koningVanEend');
+
+                expect(callbackSpy).toHaveBeenCalledTimes(1);
+            });
+
+            it('should not call the action callback if the useCallback arg is set with a falsy value', () => {
+                const callbackSpy = jest.fn();
+                const action = {
+                    type: 'UPDATE_BASKET',
+                    callback: callbackSpy
+                };
+                zoohq.register(action);
+
+                expect(zoohq.store.items).toEqual([]);
+
+                zoohq.dispatch('UPDATE_BASKET', {
+                    items: [1, 2, 3]
+                }, false);
+
+                expect(zoohq.actions.UPDATE_BASKET).toBeTruthy();
+                expect(zoohq.store.items).toEqual([1, 2, 3]);
+
+                expect(callbackSpy).toHaveBeenCalledTimes(0);
             });
 
             it('should throw an error if the action type does not exist', () => {

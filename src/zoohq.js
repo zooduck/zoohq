@@ -3,13 +3,15 @@ const zoohq = (() => {
     let store = {};
 
     return {
-        dispatch(type, data = undefined) {
-            const storeCopy = JSON.parse(JSON.stringify(store));
-
+        dispatch(type, data = undefined, useCallback = true) {
             store = {
-                ...storeCopy,
+                ...store,
                 ...data
             };
+
+            if (!useCallback) {
+                return;
+            }
 
             try {
                 actions[type](store);

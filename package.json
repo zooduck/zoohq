@@ -1,9 +1,10 @@
 {
   "name": "@zooduck/zoohq",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple State Engine for JavaScript Applications",
   "main": "zoohq.js",
   "scripts": {
+    "pretest": "npm run build",
     "test": "jest --coverage --watch",
     "build": "npx babel src/zoohq.js --out-file lib/zoohq.js --source-maps"
   },
