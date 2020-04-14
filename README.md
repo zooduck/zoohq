@@ -16,7 +16,7 @@ zoohq.register('UPDATE_ITEMS', (store) => {
   stateItems = store.items;
 });
 
-const onItemAdded = (item) => {
+const addItemToBasket = (item) => {
   zoohq.dispatch('UPDATE_ITEMS', {
     items: [...zoohq.store.items, item]
   });
@@ -27,7 +27,7 @@ console.log(zoohq.store.items, storeItems, latestItemName);
 // []
 // undefined
 
-onItemAdded({name: 'mlp_calendar', price: '19.99', currency: 'USD'});
+addItemToBasket({name: 'mlp_calendar', price: '19.99', currency: 'USD'});
 
 console.log(zoohq.store.items, stateItems, latestItemName);
 // [0: {name: 'mlp_calendar', price: '19.99', currency: 'USD'}]
@@ -39,7 +39,7 @@ zoohq.listen('UPDATE_ITEMS', (event) => {
   latestItemName = store.items.slice(-1)[0].name;
 };
 
-onItemAdded({name: 'fluttershy_pencil_case', price: '18.50', currency: 'USD'});
+addItemToBasket({name: 'fluttershy_pencil_case', price: '18.50', currency: 'USD'});
 
 console.log(zoohq.store.items, stateItems, latestItemName);
 // [0: {name: 'mlp_calendar', price: '19.99', currency: 'USD'}, 1: {name: 'fluttershy_pencil_case', price: '18.50', currency: 'USD'}]
