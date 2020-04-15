@@ -39,6 +39,11 @@ zoohq.listen('UPDATE_ITEMS', (event) => {
   latestItemName = store.items.slice(-1)[0].name;
 };
 
+console.log(zoohq.store.items, stateItems, latestItemName);
+// [0: {name: 'mlp_calendar', price: '19.99', currency: 'USD'}]
+// [0: {name: 'mlp_calendar', price: '19.99', currency: 'USD'}]
+// undefined
+
 addItemToBasket({name: 'fluttershy_pencil_case', price: '18.50', currency: 'USD'});
 
 console.log(zoohq.store.items, stateItems, latestItemName);
