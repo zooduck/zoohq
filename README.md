@@ -16,6 +16,11 @@ zoohq.register('UPDATE_ITEMS', (store) => {
   stateItems = store.items;
 });
 
+zoohq.listen('UPDATE_ITEMS', (event) => {
+  const { store } = event.detail;
+  latestItemName = store.items.slice(-1)[0].name;
+};
+
 const addItemToBasket = (item) => {
   zoohq.dispatch('UPDATE_ITEMS', {
     items: [...zoohq.store.items, item]
@@ -33,11 +38,6 @@ console.log(zoohq.store.items, stateItems, latestItemName);
 // [0: {name: 'mlp_calendar', price: '19.99', currency: 'USD'}]
 // [0: {name: 'mlp_calendar', price: '19.99', currency: 'USD'}]
 // undefined
-
-zoohq.listen('UPDATE_ITEMS', (event) => {
-  const { store } = event.detail;
-  latestItemName = store.items.slice(-1)[0].name;
-};
 
 console.log(zoohq.store.items, stateItems, latestItemName);
 // [0: {name: 'mlp_calendar', price: '19.99', currency: 'USD'}]
